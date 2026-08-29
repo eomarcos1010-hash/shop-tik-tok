@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HookShop AI | Transforme produtos em vídeos que prendem atenção</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="header-wrapper">
+                <a href="#" class="logo">
+                    <span class="logo-main">HOOKSHOP AI</span>
+                    <span class="logo-tag">IA para TikTok Shop</span>
+                </a>
+
+                <nav class="nav-desktop">
+                    <a href="#gerador">Gerador</a>
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#sobre">Sobre</a>
+                    <button class="btn btn-primary">Começar agora</button>
+                </nav>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="nav-mobile" id="navMobile">
+                <a href="#gerador">Gerador</a>
+                <a href="#como-funciona">Como funciona</a>
+                <a href="#recursos">Recursos</a>
+                <a href="#sobre">Sobre</a>
+                <button class="btn btn-primary">Começar agora</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Crie ganchos que fazem as pessoas <span class="neon-text">parar de rolar</span>.</h1>
+                        <p class="hero-text">Digite o produto, preço e descrição. O HookShop AI transforma essas informações em ideias de conteúdo para TikTok Shop em poucos segundos.</p>
+                        <div class="hero-buttons">
+                            <a href="#gerador" class="btn btn-primary btn-lg">🔥 GERAR MEUS GANCHOS</a>
+                            <a href="#como-funciona" class="btn btn-secondary btn-lg">VER COMO FUNCIONA</a>
+                        </div>
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="10">0</span>
+                                <span class="stat-label">Ganchos gerados</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="5">0</span>
+                                <span class="stat-label">Estratégias</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="100">0</span>
+                                <span class="stat-label">% Personalizado</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="floating-icon icon-1">🎬</div>
+                        <div class="floating-icon icon-2">🤖</div>
+                        <div class="floating-icon icon-3">🛒</div>
+                        <div class="floating-icon icon-4">⚡</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GERADOR PRINCIPAL -->
+        <section class="generator-section" id="gerador">
+            <div class="container">
+                <div class="glass-card generator-card">
+                    <div class="section-header">
+                        <h2 class="section-title">GERADOR DE CONTEÚDO</h2>
+                        <p class="section-subtitle">Transforme qualquer produto em conteúdo pronto para TikTok.</p>
+                    </div>
+
+                    <form id="generatorForm" class="generator-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Nome do produto *</label>
+                                <input type="text" id="productName" placeholder="Ex: Fone Bluetooth TWS" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Preço *</label>
+                                <input type="text" id="productPrice" placeholder="Ex: R$ 49,90" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descrição *</label>
+                            <textarea id="productDesc" placeholder="Descreva o produto, suas características e benefícios..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Imagem do produto</label>
+                            <div class="upload-area" id="uploadArea">
+                                <input type="file" id="imageInput" accept=".jpg,.jpeg,.png,.webp" hidden>
+                                <div class="upload-placeholder">
+                                    <p>Arraste uma imagem aqui ou <span>clique para selecionar</span></p>
+                                    <small>Formatos aceitos: JPG, JPEG, PNG, WEBP</small>
+                                </div>
+                                <div class="upload-preview" id="uploadPreview"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>O que você quer criar?</label>
+                                <select id="contentType">
+                                    <option value="hooks">🔥 Ganchos virais</option>
+                                    <option value="script">🎬 Roteiro completo</option>
+                                    <option value="ideas">💡 Ideias de vídeos</option>
+                                    <option value="ad">🛒 Anúncio para TikTok Shop</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantidade</label>
+                                <select id="quantity">
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="errorMessages" class="error-box"></div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="generateBtn">
+                            <span id="btnText">🔥 GERAR CONTEÚDO</span>
+                            <span id="btnLoading" class="loading-steps" style="display:none;"></span>
+                        </button>
+                    </form>
+
+                    <!-- Área de Resultados -->
+                    <div id="resultsArea" class="results-area" style="display:none;">
+                        <div class="results-header">
+                            <h3>Resultado</h3>
+                            <div class="results-actions">
+                                <button class="btn-copy-all" id="copyAllBtn">📋 COPIAR TODOS</button>
+                                <button class="btn-regenerate" id="regenerateBtn">🔄 GERAR NOVAMENTE</button>
+                            </div>
+                        </div>
+                        <div id="resultsContent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section class="section" id="como-funciona">
+            <div class="container">
+                <div class="section-header center">
+                    <h2 class="section-title">Como funciona</h2>
+                    <p class="section-subtitle">Três passos simples para criar conteúdo viral</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="glass-card step-card">
+                        <span class="step-number">01</span>
+                        <h3>Informe o produto</h3>
+                        <p>Nome, preço, descrição e imagem. Quanto mais detalhes, melhores os resultados.</p>
+                    </div>
+                    <div class="glass-card step-card">
+                        <span class="step-number">02</span>
+                        <h3>A IA analisa</h3>
+                        <p>O sistema identifica oportunidades de conteúdo e aplica estratégias comprovadas de viralização.</p>
+                    </div>
+                    <div class="glass-card step-card">
+                        <span class="step-number">03</span>
+                        <h3>Receba ideias</h3>
+                        <p>Ganchos, roteiros e ideias prontos para copiar e gravar seus vídeos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECURSOS -->
+        <section class="section" id="recursos">
+            <div class="container">
+                <div class="section-header center">
+                    <h2 class="section-title">Recursos</h2>
+                    <p class="section-subtitle">Tudo que você precisa para crescer no TikTok Shop</p>
+                </div>
+                <div class="features-grid">
+                    <div class="glass-card feature-card"><h3>🔥 Ganchos virais</h3><p>Frases prontas que prendem a atenção em 3 segundos.</p></div>
+                    <div class="glass-card feature-card"><h3>🎬 Roteiros completos</h3><p>Do gancho até a chamada para ação, passo a passo.</p></div>
+                    <div class="glass-card feature-card"><h3>💡 Ideias de vídeos</h3><p>Sugestões de temas e abordagens criativas.</p></div>
+                    <div class="glass-card feature-card"><h3>🛒 Conteúdo para TikTok Shop</h3><p>Focado em vender e converter visualizações em compras.</p></div>
+                    <div class="glass-card feature-card"><h3>📋 Copiar com um clique</h3><p>Copie qualquer conteúdo ou todos de uma vez.</p></div>
+                    <div class="glass-card feature-card"><h3>💾 Histórico</h3><p>Seu conteúdo gerado fica salvo para acessar quando quiser.</p></div>
+                    <div class="glass-card feature-card"><h3>❤️ Favoritos</h3><p>Salve os melhores ganchos para reutilizar.</p></div>
+                    <div class="glass-card feature-card"><h3>⚡ Geração rápida</h3><p>Receba resultados em segundos, sem esperar.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAVORITOS -->
+        <section class="section" id="favoritos">
+            <div class="container">
+                <div class="section-header center">
+                    <h2 class="section-title">❤️ Meus Favoritos</h2>
+                    <p class="section-subtitle">Seus melhores ganchos salvos</p>
+                </div>
+                <div class="glass-card">
+                    <div id="favoritesContent">
+                        <p class="empty-message">Nenhum favorito salvo ainda. Ao gerar conteúdo, clique no ♡ para salvar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HISTÓRICO -->
+        <section class="section" id="historico">
+            <div class="container">
+                <div class="section-header center">
+                    <h2 class="section-title">📂 Histórico</h2>
+                    <p class="section-subtitle">Conteúdo gerado anteriormente</p>
+                    <button class="btn btn-secondary btn-sm" id="clearHistoryBtn">Limpar Histórico</button>
+                </div>
+                <div class="glass-card">
+                    <div id="historyContent">
+                        <p class="empty-message">Nenhum histórico encontrado. Comece gerando algum conteúdo acima!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 class="footer-logo">HOOKSHOP AI</h3>
+                    <p>Transformando produtos em conteúdo que chama atenção.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#gerador">Gerador</a>
+                    <a href="#recursos">Recursos</a>
+                    <a href="#como-funciona">Como funciona</a>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Política de Privacidade</a>
+                </div>
+            </div>
+            <p class="footer-copy">© 2026 HookShop AI. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
