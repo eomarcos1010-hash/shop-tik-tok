@@ -1,38 +1,18 @@
-// ==========================================
-// SERVIDOR GRATUITO — CONECTA COM A IA GROQ
-// ==========================================
-// Coloque este arquivo em: api/gerar-conteudo.js
-
 export default async function handler(req, res) {
-    // Habilita CORS para o seu site
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Resposta para requisição de verificação (preflight)
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
+    if (req.method === 'OPTIONS') return res.status(200).end();
+    if (req.method !== 'POST') return res.status(405).json({ erro: 'Método não permitido' });
 
-    // Aceita apenas método POST
-    if (req.method !== 'POST') {
-        return res.status(405).json({ erro: 'Método não permitido' });
-    }
-
-    // Pega os dados enviados do formulário
     const { productName, price, description, type, quantity } = req.body;
-
-    // 🔑 PEGA A CHAVE DA IA DAS VARIÁVEIS DE AMBIENTE (NÃO FICA EXPOSTA!)
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
     if (!GROQ_API_KEY) {
-        return res.status(500).json({
-            success: false,
-            mensagem: 'Chave da IA não configurada'
-        });
+        return res.status(500).json({ success: false, mensagem: 'Chave da IA não configurada' });
     }
 
-    // 📝 INSTRUÇÕES PARA A IA — O QUE ELA DEVE FAZER
     const instrucoesPorTipo = {
         hooks: `
 Você é especialista em ganchos virais para TikTok Shop.
@@ -105,7 +85,6 @@ Tom convincente, curto e direto.`
     const prompt = instrucoesPorTipo[type] || instrucoesPorTipo.hooks;
 
     try {
-        // 🤖 CHAMANDO A INTELIGÊNCIA ARTIFICIAL (Llama 3.3 — Grátis)
         const respostaIA = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -113,53 +92,32 @@ Tom convincente, curto e direto.`
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'llama-3.1-70b-versatile',
+                model: 'llama3-70b-8192',
                 temperature: 0.85,
                 max_tokens: 1800,
                 messages: [
-                    {
-                        role: 'system',
-                        content: 'Você é um especialista em conteúdo de vendas para TikTok Shop. Responda apenas com o conteúdo solicitado, sem comentários, sem apresentação.'
-                    },
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
+                    { role: 'system', content: 'Você é um especialista em conteúdo de vendas para TikTok Shop. Responda apenas com o conteúdo solicitado, sem comentários, sem apresentação.' },
+                    { role: 'user', content: prompt }
                 ]
             })
         });
 
         const dadosIA = await respostaIA.json();
+        if (!respostaIA.ok) throw new Error(dadosIA.error?.message || 'Erro na IA');
 
-        if (!respostaIA.ok) {
-            throw new Error(dadosIA.error?.message || 'Erro na IA');
-        }
-
-        // ✅ RESPOSTA DA IA — TRATADA E RETORNADA
         const textoGerado = dadosIA.choices[0].message.content.trim();
         let content = [];
 
         if (type === 'hooks') {
-            // Separa cada gancho em uma linha
-            content = textoGerado
-                .split('\n')
-                .filter(linha => linha.trim().length > 8)
-                .map(linha => linha.replace(/^[0-9.\-•) ]+\s*/, '').trim());
+            content = textoGerado.split('\n').filter(linha => linha.trim().length > 8).map(linha => linha.replace(/^[0-9.\-•) ]+\s*/, '').trim());
         } else {
-            // Roteiro, ideias e anúncio — retorna o texto completo
             content = [textoGerado];
         }
 
-        return res.status(200).json({
-            success: true,
-            content: content
-        });
+        return res.status(200).json({ success: true, content });
 
     } catch (erro) {
         console.error('ERRO:', erro);
-        return res.status(500).json({
-            success: false,
-            mensagem: erro.message || 'Falha ao gerar conteúdo'
-        });
+        return res.status(500).json({ success: false, mensagem: erro.message || 'Falha ao gerar conteúdo' });
     }
 }
