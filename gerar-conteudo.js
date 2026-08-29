@@ -92,7 +92,7 @@ Tom convincente, curto e direto.`
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'llama3-70b-8192',
+                model: 'llama-3.3-70b-versatile',
                 temperature: 0.85,
                 max_tokens: 1800,
                 messages: [
